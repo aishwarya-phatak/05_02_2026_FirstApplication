@@ -3,6 +3,7 @@ package com.example.a05_02_2026_firstapplication;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,14 +16,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    LinearLayout container;
+    TextView welcomeTextView,messageTextView;
+    EditText nameEditText,cityEditText;
+    Button btnSubmit;
 
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LinearLayout container = new LinearLayout(this);
+        container = new LinearLayout(this);
 
         ViewGroup.LayoutParams containerLayoutParams = new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -34,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         container.setOrientation(LinearLayout.VERTICAL);
         container.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 
-        TextView welcomeTextView = new TextView(this);
+        welcomeTextView = new TextView(this);
         welcomeTextView.setText("Welcome to Bitcode!");
         welcomeTextView.setPadding(5,5,5,5);
         welcomeTextView.setLeft(10);
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         welcomeTextView.setLayoutParams(layoutParamsForViews);
 
-        TextView messageTextView = new TextView(this);
+        messageTextView = new TextView(this);
         messageTextView.setText("Android Feb 2026");
         messageTextView.setPadding(5,5,5,5);
         messageTextView.setLayoutParams(layoutParamsForViews);
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         messageTextView.setTextSize(20);
         messageTextView.setBackgroundColor(R.color.light_yellow);
 
-        EditText nameEditText = new EditText(this);
+        nameEditText = new EditText(this);
         nameEditText.setHint("Enter the name");
         nameEditText.setPadding(5,5,5,5);
         nameEditText.setLayoutParams(layoutParamsForViews);
@@ -68,16 +74,17 @@ public class MainActivity extends AppCompatActivity {
         nameEditText.setRight(10);
         nameEditText.setTextSize(20);
 
-        EditText cityEditText = new EditText(this);
+        cityEditText = new EditText(this);
         cityEditText.setHint("Enter the city");
         cityEditText.setPadding(5,5,5,5);
         cityEditText.setLayoutParams(layoutParamsForViews);
         cityEditText.setTop(10);
         cityEditText.setLeft(10);
         cityEditText.setRight(10);
+
         cityEditText.setTextSize(20);
 
-        Button btnSubmit = new Button(this);
+        btnSubmit = new Button(this);
         btnSubmit.setText("Submit");
         btnSubmit.setPadding(5,5,5,5);
         btnSubmit.setLayoutParams(layoutParamsForViews);
@@ -93,5 +100,35 @@ public class MainActivity extends AppCompatActivity {
         container.addView(btnSubmit);
 
         setContentView(container);
+
+        //way 1 - passing object of inner class as an argument
+//        btnSubmit.setOnClickListener(new BtnSubmitClickListener());
+
+        //way 2 = passing the object of anonymous class
+//          btnSubmit.setOnClickListener(new View.OnClickListener() {
+//              @Override
+//              public void onClick(View v) {
+//                    welcomeTextView.setText("Welcome " + nameEditText.getText().toString());
+//              }
+//          });
+
+        //way 3 - implementing interface at Activity class level
+        btnSubmit.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+            if (v == btnSubmit){
+                welcomeTextView.setText("Welcome " + nameEditText.getText().toString());
+            }
+    }
+
+    public class BtnSubmitClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            if (v == btnSubmit){
+                welcomeTextView.setText("Welcome  " + cityEditText.getText().toString());
+            }
+        }
     }
 }
