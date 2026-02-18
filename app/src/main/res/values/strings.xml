@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">05_02_2026_FirstApplication</string>
+    <string name="welcome_to_bitcode">Welcome To Bitcode!</string>
+    <string name="android_feb_2026_batch">Android Feb 2026 Batch</string>
+    <string name="enter_the_username">Enter the username</string>
+    <string name="enter_the_password">Enter the password</string>
+    <string name="submit">Submit</string>
 </resources>
